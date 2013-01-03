@@ -1,7 +1,13 @@
 package model;
 
 public class Session {
-	public static void main(String[] args) {
-		System.out.println("MEOW MEOW MEOW");
+	private String teamId;
+	
+	public Session(String teamId) {
+		this.teamId = teamId;
+	}
+	
+	public String getTeamId() {
+		return teamId;
 	}
 }
