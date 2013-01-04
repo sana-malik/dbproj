@@ -1,14 +1,14 @@
 package model;
 
 public class Session {
-	private String teamId;
 	private int time_since_last_answer;
+	private Team active_team;
 	
 	public Session(String teamId) {
-		this.teamId = teamId;
+		active_team = new Team(teamId);
 	}
 	
 	public String getTeamId() {
-		return teamId;
+		return active_team.getTeamID();
 	}
 }
