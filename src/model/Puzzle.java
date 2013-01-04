@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Puzzle {
+	int ID;
 	String intro_text;
 	
 	private ArrayList<Hint> hints;
@@ -10,5 +11,5 @@ public class Puzzle {
 	
 	String answer;
 	
-	private int fan_worth;
+	private int full_fan_worth;
 }
