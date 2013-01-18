@@ -9,6 +9,6 @@ public class Session {
 	}
 	
 	public String getTeamId() {
-		return active_team.getTeamID();
+		return active_team.getId();
 	}
 }
