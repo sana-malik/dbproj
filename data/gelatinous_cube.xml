@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<puzzle>
+	<name>Gelatinous Cube</name>
+	<start_code>boingboing</start_code>
+	<max_fan_worth>100</max_fan_worth>
+	<par_time>15</par_time>
+	
+	<text></text>
+	
+	<hint>
+		<time_to_available>10</time_till_available>
+		<time_to_min_cost>15</time_to_min_cost>
+		
+		<start_cost>10</start_cost>
+		<min_cost>0</min_cost>
+		
+		<text>If you're having trouble seeing what to do, it might be a case of the blind leading the blind.</text>
+	</hint>
+	
+	<hint>
+		<time_to_available>15</time_till_available>
+		<time_to_min_cost>20</time_to_min_cost>
+		
+		<start_cost>10</start_cost>
+		<min_cost>0</min_cost>
+		
+		<text>Did you know red and blue make purple?</text>
+	</hint>
+	
+	<hint>
+		<time_to_available>20</time_till_available>
+		<time_to_min_cost>25</time_to_min_cost>
+		
+		<start_cost>10</start_cost>
+		<min_cost>5</min_cost>
+		
+		<text>The dots are Braille letters.  There are two sets super-imposed, one red and one blue.  Purple dots are where a red and blue dot exist.</text>
+	</hint>
+	
+	<hint>
+		<time_to_available>25</time_till_available>
+		<time_to_min_cost>30</time_to_min_cost>
+		
+		<start_cost>10</start_cost>
+		<min_cost>5</min_cost>
+		
+		<text>Have you tried applying the Braille message to the puzzle?  Literally?</text>
+	</hint>
+	
+	<hint>
+		<time_to_available>30</time_till_available>
+		<time_to_min_cost>60</time_to_min_cost>
+		
+		<start_cost>50</start_cost>
+		<min_cost>20</min_cost>
+		
+		<text>The Braille solves to \"Blacklight\".  Apply a blacklight to the puzzle and you should see the answer: Sugar Rush.</text>
+	</hint>
+	
+	<answer type="final">
+		<text>sugarrush</text>
+		<response>Congratulations, you have solved the puzzle.</response>
+	</answer>
+	
+	<answer type="partial">
+		<text>blacklight</text>
+		<response>You're on the right track, but you need to go one step further.  Do you have a blacklight?</response>
+		<hint_jump>4</hint_jump>
+	</answer>
+	
+	<answer type="partial">
+		<text>lightblack</text>
+		<response>Oops, red comes before blue.</response>
+		<hint_jump>4</hint_jump>
+	</answer>
+	
+	<answer type="partial">
+		<text>grey</text>
+		<response>You're being too literal.  Also, red comes before blue.</response>
+		<hint_jump>4</hint_jump>
+	</answer>
+	
+	<answer type="partial">
+		<text>gray</text>
+		<response>You're being too literal.  Also, red comes before blue.</response>
+		<hint_jump>4</hint_jump>
+	</answer>
+	
+	<resource_unlocked>fork</resource_unlocked>
+	<team_killed>12b</team_killed>
+</puzzle>

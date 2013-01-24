@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<location>
+	<name>The Motley Fool</name>
+	<address>2000 Duke St., Fourth Floor\nAlexandria, VA 22314</address>
+	
+	<image>fool_logo.jpg</image>
+	<map>fool_map.png</map>
+	
+	<food>Restaurants within walking distance (e.g. Quiznos, Einstein Bros. Bagels).</food>
+	<restrooms>There are restrooms located inside the office building.</restrooms>
+	
+	<notes>You arrive in a large, clock-shaped arena.</notes>
+	
+	<open>11:00pm</open>
+	<closed>2:00am</closed>
+	
+	<puzzle>gelatinous_cube</puzzle>
+</location>
