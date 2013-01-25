@@ -26,7 +26,7 @@ public class Session {
 		team_list.add(active_team);
 		
 		locations = new ArrayList<Location>();
-		locations.add( XMLReader.readLocation("data\\location1.xml") );
+		locations.add( XMLReader.readLocation("data/location1.xml") );
 		
 		current_location = locations.get(0);
 	}

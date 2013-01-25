@@ -14,5 +14,5 @@
 	<time_open>11:00 PM</time_open>
 	<time_closed>2:00 AM</time_closed>
 	
-	<puzzle>data\gelatinous_cube.xml</puzzle>
+	<puzzle>data/gelatinous_cube.xml</puzzle>
 </location>
