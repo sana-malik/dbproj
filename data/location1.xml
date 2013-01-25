@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <location>
 	<name>The Motley Fool</name>
-	<address>2000 Duke St., Fourth Floor\nAlexandria, VA 22314</address>
+	<address>2000 Duke St., Fourth Floor, Alexandria, VA 22314</address>
 	
 	<image_file>fool_logo.jpg</image_file>
 	<map_file>fool_map.png</map_file>
@@ -14,5 +14,5 @@
 	<time_open>11:00 PM</time_open>
 	<time_closed>2:00 AM</time_closed>
 	
-	<puzzle>gelatinous_cube.xml</puzzle>
+	<puzzle>data\gelatinous_cube.xml</puzzle>
 </location>
