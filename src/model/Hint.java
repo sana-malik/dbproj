@@ -23,5 +23,17 @@ public class Hint {
 		this.max_fan_cost = max_fan_cost;
 		this.min_fan_cost = min_fan_cost;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Hint [text=" + text + ", minutes_till_available="
+				+ minutes_till_available + ", minutes_till_min_cost="
+				+ minutes_till_min_cost + ", index=" + index
+				+ ", max_fan_cost=" + max_fan_cost + ", min_fan_cost="
+				+ min_fan_cost + "]";
+	}
+	
+	
 	
 }
