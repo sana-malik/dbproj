@@ -9,7 +9,7 @@
 	
 	<hint>
 		<minutes_till_available></time_till_available>
-		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		<minutes_till_min_cost></minutes_till_min_cost>
 		
 		<max_fan_cost></max_fan_cost>
 		<min_fan_cost></min_fan_cost>
@@ -19,7 +19,7 @@
 	
 	<hint>
 		<minutes_till_available></time_till_available>
-		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		<minutes_till_min_cost></minutes_till_min_cost>
 		
 		<max_fan_cost></max_fan_cost>
 		<min_fan_cost></min_fan_cost>
@@ -29,7 +29,7 @@
 	
 	<hint>
 		<minutes_till_available></time_till_available>
-		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		<minutes_till_min_cost></minutes_till_min_cost>
 		
 		<max_fan_cost></max_fan_cost>
 		<min_fan_cost></min_fan_cost>
@@ -39,7 +39,7 @@
 	
 	<hint>
 		<minutes_till_available></time_till_available>
-		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		<minutes_till_min_cost></minutes_till_min_cost>
 		
 		<max_fan_cost></max_fan_cost>
 		<min_fan_cost></min_fan_cost>
@@ -49,7 +49,7 @@
 	
 	<hint>
 		<minutes_till_available></time_till_available>
-		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		<minutes_till_min_cost></minutes_till_min_cost>
 		
 		<max_fan_cost></max_fan_cost>
 		<min_fan_cost></min_fan_cost>
