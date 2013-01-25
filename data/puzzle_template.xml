@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<puzzle>
+	<name></name>
+	<start_code></start_code>
+	<max_fan_worth></max_fan_worth>
+	<par_time></par_time>
+	
+	<flavor_text></flavor_text>
+	
+	<hint>
+		<minutes_till_available></time_till_available>
+		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		
+		<max_fan_cost></max_fan_cost>
+		<min_fan_cost></min_fan_cost>
+		
+		<text></text>
+	</hint>
+	
+	<hint>
+		<minutes_till_available></time_till_available>
+		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		
+		<max_fan_cost></max_fan_cost>
+		<min_fan_cost></min_fan_cost>
+		
+		<text></text>
+	</hint>
+	
+	<hint>
+		<minutes_till_available></time_till_available>
+		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		
+		<max_fan_cost></max_fan_cost>
+		<min_fan_cost></min_fan_cost>
+		
+		<text></text>
+	</hint>
+	
+	<hint>
+		<minutes_till_available></time_till_available>
+		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		
+		<max_fan_cost></max_fan_cost>
+		<min_fan_cost></min_fan_cost>
+		
+		<text></text>
+	</hint>
+	
+	<hint>
+		<minutes_till_available></time_till_available>
+		<minutes_till_min_fan_cost></minutes_till_min_fan_cost>
+		
+		<max_fan_cost></max_fan_cost>
+		<min_fan_cost></min_fan_cost>
+		
+		<text></text>
+	</hint>
+	
+	<answer>
+		<type></type>
+		<text></text>
+		<response></response>
+	</answer>
+	
+	<answer>
+		<type></type>
+		<text></text>
+		<response></response>
+		<hint_jump></hint_jump>
+	</answer>
+	
+	<answer>
+		<type></type>
+		<text></text>
+		<response></response>
+		<hint_jump></hint_jump>
+	</answer>
+	
+	<answer>
+		<type></type>
+		<text></text>
+		<response></response>
+		<hint_jump></hint_jump>
+	</answer>
+	
+	<answer>
+		<type></type>
+		<text></text>
+		<response></response>
+		<hint_jump></hint_jump>
+	</answer>
+	
+	<resource_unlocked></resource_unlocked>
+	<team_killed></team_killed>
+</puzzle>
