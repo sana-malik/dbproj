@@ -56,4 +56,28 @@ public class Puzzle {
 		this.resources_unlocked = resources_unlocked;
 		this.teams_killed = teams_killed;
 	}
+
+	@Override
+	public String toString() {
+		return "Puzzle [name=" + name + ", start_code=" + start_code
+				+ ", flavor_text=" + flavor_text + ", max_fan_worth="
+				+ max_fan_worth + ", current_fan_worth=" + current_fan_worth
+				+ ", elapsed_minutes=" + elapsed_minutes + ", par_time="
+				+ par_time + ", start_time=" + start_time + ", end_time="
+				+ end_time + ", time_of_last_hint=" + time_of_last_hint
+				+ ", status=" + status + ", guesses_made=" + guesses_made
+				+ ", hints=" + hints + ", answers=" + answers
+				+ ", resources_unlocked=" + resources_unlocked
+				+ ", teams_killed=" + teams_killed + "]";
+	}
+
+	public boolean isStartCode(String code) {
+		return this.start_code.equals(code);
+	}
+
+	public String getFlavorText() {
+		return flavor_text;
+	}
+	
+	
 }
