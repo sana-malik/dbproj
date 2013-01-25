@@ -11,7 +11,7 @@ public class Answer {
 	
 	
 	public Answer(String text, String type, String response, int hint_jump) {
-		this.text = text;
+		this.text = Utilities.normalizeText( text );
 		this.type = type;
 		this.response = response;
 		this.hint_jump = hint_jump;
@@ -41,4 +41,12 @@ public class Answer {
 	public int getHintJump() {
 		return hint_jump;
 	}
+
+	@Override
+	public String toString() {
+		return "Answer [type=" + type + ", text=" + text + ", response="
+				+ response + ", hint_jump=" + hint_jump + "]";
+	}
+	
+	
 }
