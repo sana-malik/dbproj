@@ -66,11 +66,9 @@ public class XMLReader {
 				NodeList nList = doc.getElementsByTagName("puzzle");
 				
 				for (int temp = 0; temp < nList.getLength(); temp++) {
-					String puzz_file = nList.item(temp).getNodeValue();
+					String puzz_file = nList.item( temp ).getFirstChild().getNodeValue();
 					
-					System.out.println("The problem is finding the puzzle file.  It's value is: " + puzz_file);
-					
-					 puzzle_list.add( readPuzzle( puzz_file ) ); 
+					puzzle_list.add( readPuzzle( puzz_file ) ); 
 				}
 				
 				location = new Location(puzzle_list, address, notes, restroom_description, food_description, image_file, map_file, time_open, time_closed);
@@ -227,10 +225,17 @@ public class XMLReader {
 	}
 
 	private static int getTagInt(String sTag, Element eElement) {
-		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+		int value = -1;
+		
+		NodeList tagList = eElement.getElementsByTagName(sTag);
 
-		Node nValue = (Node) nlList.item(0);
-
-		return Integer.parseInt( nValue.getNodeValue().trim() );
+		if( tagList.getLength() != 0 ){
+			NodeList nlList = tagList.item(0).getChildNodes();
+			Node nValue = (Node) nlList.item(0);
+			
+			value = Integer.parseInt( nValue.getNodeValue().trim() );
+		}
+		
+		return value;
 	}
 }
