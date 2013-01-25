@@ -39,6 +39,10 @@ public class Session {
 		return active_puzzle_list;
 	}
 	
+	public ArrayList<Team> getTeamList() {
+		return team_list;
+	}
+	
 	public String checkEntry(String entry) {
 		String response = "";
 		

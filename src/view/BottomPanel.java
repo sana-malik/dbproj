@@ -11,18 +11,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.Team;
+
 public class BottomPanel {
 	public static JPanel create() {
 		JPanel panel = new JPanel();
 		BufferedImage myPicture;
 		try {
-			for (int i = 1; i < 10; i++) {
-				myPicture = ImageIO.read(new File("images/team0"+i+".gif"));
-				JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-				panel.add(picLabel);
-			}
-			for (int i = 10; i <=24; i++) {
-				myPicture = ImageIO.read(new File("images/team"+i+".gif"));
+			for (Team t : MainWindow.session.getTeamList()) {
+				myPicture = ImageIO.read(new File("images/team" + t.getId() +".gif"));
 				JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 				panel.add(picLabel);
 			}
