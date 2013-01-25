@@ -31,4 +31,28 @@ public class Location {
 		this.time_open = time_open;
 		this.time_closed = time_closed;
 	}
+
+	@Override
+	public String toString() {
+		return "Location [puzzle_list=" + puzzle_list + ", address=" + address
+				+ ", notes=" + notes + ", restroom_description="
+				+ restroom_description + ", food_description="
+				+ food_description + ", image_file=" + image_file
+				+ ", map_file=" + map_file + ", time_open=" + time_open
+				+ ", time_closed=" + time_closed + "]";
+	}
+	
+	public ArrayList<Puzzle> checkStartCodes(String code) {
+		ArrayList<Puzzle> list = new ArrayList<Puzzle>();
+		
+		for ( int index = 0; index < puzzle_list.size(); index++ ) {
+			Puzzle this_puzzle = puzzle_list.get(index);
+			
+			if ( this_puzzle.isStartCode(code) )
+				list.add( this_puzzle );
+		}
+		
+		return list;
+	}
+	
 }
