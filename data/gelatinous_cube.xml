@@ -8,8 +8,8 @@
 	<flavor_text>Upon entering the room you see a gelatinous cube before you.</flavor_text>
 	
 	<hint>
-		<minutes_till_available>10</time_till_available>
-		<minutes_till_min_fan_cost>15</minutes_till_min_fan_cost>
+		<minutes_till_available>10</minutes_till_available>
+		<minutes_till_min_cost>15</minutes_till_min_cost>
 		
 		<max_fan_cost>10</max_fan_cost>
 		<min_fan_cost>0</min_fan_cost>
@@ -18,8 +18,8 @@
 	</hint>
 	
 	<hint>
-		<minutes_till_available>15</time_till_available>
-		<minutes_till_min_fan_cost>20</minutes_till_min_fan_cost>
+		<minutes_till_available>15</minutes_till_available>
+		<minutes_till_min_cost>20</minutes_till_min_cost>
 		
 		<max_fan_cost>10</max_fan_cost>
 		<min_fan_cost>0</min_fan_cost>
@@ -28,8 +28,8 @@
 	</hint>
 	
 	<hint>
-		<minutes_till_available>20</time_till_available>
-		<minutes_till_min_fan_cost>25</minutes_till_min_fan_cost>
+		<minutes_till_available>20</minutes_till_available>
+		<minutes_till_min_cost>25</minutes_till_min_cost>
 		
 		<max_fan_cost>10</max_fan_cost>
 		<min_fan_cost>5</min_fan_cost>
@@ -38,8 +38,8 @@
 	</hint>
 	
 	<hint>
-		<minutes_till_available>25</time_till_available>
-		<minutes_till_min_fan_cost>30</minutes_till_min_fan_cost>
+		<minutes_till_available>25</minutes_till_available>
+		<minutes_till_min_cost>30</minutes_till_min_cost>
 		
 		<max_fan_cost>10</max_fan_cost>
 		<min_fan_cost>5</min_fan_cost>
@@ -48,8 +48,8 @@
 	</hint>
 	
 	<hint>
-		<minutes_till_available>30</time_till_available>
-		<minutes_till_min_fan_cost>60</minutes_till_min_fan_cost>
+		<minutes_till_available>30</minutes_till_available>
+		<minutes_till_min_cost>60</minutes_till_min_cost>
 		
 		<max_fan_cost>50</max_fan_cost>
 		<min_fan_cost>20</min_fan_cost>
