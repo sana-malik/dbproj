@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import utils.Utilities;
+import utilities.Utils;
 
 import model.Session;
 
@@ -53,7 +53,7 @@ class ButtonAction implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		String entry = Utilities.normalizeText( in.getText() );
+		String entry = Utils.normalizeText( in.getText() );
 		
 		String response = MainWindow.session.checkEntry( entry );
 		
