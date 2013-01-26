@@ -36,7 +36,7 @@ public class XMLReader {
 
 		try {
 
-			File fXmlFile = new File(filename);
+			File fXmlFile = new File(Const.LOCATION_DIR + filename);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -98,7 +98,7 @@ public class XMLReader {
 
 		try {
 
-			File fXmlFile = new File(filename);
+			File fXmlFile = new File(Const.PUZZLE_DIR + filename);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
