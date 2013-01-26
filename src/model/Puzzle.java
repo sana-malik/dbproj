@@ -77,18 +77,23 @@ public class Puzzle {
 		return this.start_code.equals(code);
 	}
 
-	public String getFlavorText() {
-		return flavor_text;
-	}
-
 	public String activatePuzzle() {
 		// TODO Auto-generated method stub
 		return flavor_text;
 	}
 
 	public String checkAnswer(String entry) {
-		// TODO Auto-generated method stub
-		return "";
+		String response = "";
+		int index = 0;
+		
+		while ( index < answers.size() && !answers.get(index).checkAnswer( entry ) ) {
+			index++;
+		}
+		
+		if ( index != answers.size() )
+			response = answers.get(index).getResponse();
+		
+		return response;
 	}
 	
 	

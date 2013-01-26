@@ -57,7 +57,6 @@ class ButtonAction implements ActionListener {
 		
 		String response = MainWindow.session.checkEntry( entry );
 		
-		System.out.println("*"+out.getText()+"*");
 		out.insert( response + "\n", 0 );
 	}
 }
