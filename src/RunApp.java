@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 import model.Location;
 import model.Session;
-import utils.XMLReader;
+import utilities.XMLReader;
 import view.MainWindow;
 
 

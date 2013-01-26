@@ -1,6 +1,6 @@
 package model;
 
-import utils.Utilities;
+import utilities.Utils;
 
 public class Answer {
 	private String type;
@@ -11,7 +11,7 @@ public class Answer {
 	
 	
 	public Answer(String text, String type, String response, int hint_jump) {
-		this.text = Utilities.normalizeText( text );
+		this.text = Utils.normalizeText( text );
 		this.type = type;
 		this.response = response;
 		this.hint_jump = hint_jump;
@@ -27,7 +27,7 @@ public class Answer {
 	}
 	
 	public boolean checkAnswer(String answer) {
-		return Utilities.normalizeText( answer ).equals( text );
+		return Utils.normalizeText( answer ).equals( text );
 	}
 	
 	public String getResponse() {

@@ -1,8 +1,8 @@
-package utils;
+package utilities;
 
 import java.io.*;
 
-public class Utilities {
+public class Utils {
 	
 	public static String normalizeText(String text) {
 		return text.toLowerCase().replaceAll("\\W", "");  // remove punctuation and spaces

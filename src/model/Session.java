@@ -3,7 +3,7 @@ package model;
 import java.sql.Time;
 import java.util.ArrayList;
 
-import utils.XMLReader;
+import utilities.XMLReader;
 
 public class Session {
 	private String teamId;
