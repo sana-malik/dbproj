@@ -22,6 +22,7 @@ public class Puzzle {
 	private String status;
 
 	private ArrayList<Entry> guesses_made;
+	private int current_hint;
 	
 	private ArrayList<Hint> hints;
 	private ArrayList<Answer> answers;
@@ -50,6 +51,7 @@ public class Puzzle {
 		this.status = "unstarted";
 		
 		this.guesses_made = new ArrayList<Entry>();
+		this.current_hint = 0;
 		
 		this.hints = hints;
 		this.answers = answers;
@@ -77,6 +79,16 @@ public class Puzzle {
 
 	public String getFlavorText() {
 		return flavor_text;
+	}
+
+	public String activatePuzzle() {
+		// TODO Auto-generated method stub
+		return flavor_text;
+	}
+
+	public String checkAnswer(String entry) {
+		// TODO Auto-generated method stub
+		return "";
 	}
 	
 	

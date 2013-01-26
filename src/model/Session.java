@@ -3,6 +3,8 @@ package model;
 import java.sql.Time;
 import java.util.ArrayList;
 
+import utilities.Const;
+import utilities.Utils;
 import utilities.XMLReader;
 
 public class Session {
@@ -26,7 +28,7 @@ public class Session {
 		team_list.add(active_team);
 		
 		locations = new ArrayList<Location>();
-		locations.add( XMLReader.readLocation("data/location1.xml") );
+		locations.add( XMLReader.readLocation("location1.xml") );
 		
 		current_location = locations.get(0);
 	}
@@ -43,13 +45,16 @@ public class Session {
 		String response = "";
 		
 		// Check active puzzles for an answer
-		
-		
+		for (int index = 0; index < active_puzzle_list.size(); index++ ){
+			response = active_puzzle_list.get(index).checkAnswer( entry );
+		}
+				
 		// Check this location's puzzles for a start code
 		ArrayList<Puzzle> local_puzzles = current_location.checkStartCodes( entry );
+		local_puzzles.removeAll( active_puzzle_list );  // this is a list of newly activated puzzles
 		
 		for( int index = 0; index < local_puzzles.size(); index++ )
-			response += local_puzzles.get(index).getFlavorText() + "\n";
+			response += local_puzzles.get(index).activatePuzzle();
 		
 		if ( response.equals("") )
 			response = "Unrecognized entry.";
