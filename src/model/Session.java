@@ -2,15 +2,13 @@ package model;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-import utilities.Const;
-import utilities.Utils;
 import utilities.XMLReader;
 
 public class Session {
-	private String teamId;
-	
-	private Time start_time;
+	private Date start_time;
 	private int elapsed_time;
 	
 	private Team active_team;
@@ -23,6 +21,9 @@ public class Session {
 	private ArrayList<Location> locations;
 	
 	public Session(String teamId) {
+		start_time = Calendar.getInstance().getTime();
+		elapsed_time = 0;
+		
 		team_list = new ArrayList<Team>();
 		active_team = new Team(teamId);
 		team_list.add(active_team);
