@@ -47,6 +47,10 @@ public class Answer {
 		return "Answer [type=" + type + ", text=" + text + ", response="
 				+ response + ", hint_jump=" + hint_jump + "]";
 	}
+
+	public boolean isFinal() {
+		return type.equals("final");
+	}
 	
 	
 }
