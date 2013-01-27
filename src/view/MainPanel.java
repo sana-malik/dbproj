@@ -86,7 +86,7 @@ class TimerAction implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		MainWindow.session.tick();
-		MainPanel.outText.insert( MainWindow.session.getElapsedTime() + " minutes have passed since you started.\n", 0);
+		//MainPanel.outText.insert( MainWindow.session.getElapsedTime() + " minutes have passed since you started.\n", 0);
 	}
 	
 }
