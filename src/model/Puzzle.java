@@ -2,6 +2,8 @@ package model;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Puzzle {
 
@@ -15,9 +17,9 @@ public class Puzzle {
 	
 	private int elapsed_minutes;
 	private int par_time;
-	private Time start_time;
-	private Time end_time;
-	private Time time_of_last_hint;
+	private Date start_time;
+	private Date end_time;
+	private Date time_of_last_hint;
 	
 	private String status;
 
@@ -79,6 +81,7 @@ public class Puzzle {
 
 	public String activatePuzzle() {
 		// TODO Auto-generated method stub
+		start_time = Calendar.getInstance().getTime();
 		return flavor_text;
 	}
 
@@ -90,10 +93,21 @@ public class Puzzle {
 			index++;
 		}
 		
-		if ( index != answers.size() )
-			response = answers.get(index).getResponse();
+		if ( index != answers.size() ) {
+			Answer matching_answer = answers.get(index);
+			response = matching_answer.getResponse();
+			
+			if ( matching_answer.isFinal() )
+				closePuzzle();
+		}
 		
 		return response;
+	}
+
+	private void closePuzzle() {
+		// TODO Auto-generated method stub
+		status = "solved";
+		end_time = Calendar.getInstance().getTime();
 	}
 	
 	
