@@ -7,11 +7,14 @@ import model.Answer;
 import model.Hint;
 import model.Location;
 import model.Puzzle;
+
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +49,7 @@ public class XMLReader {
 				System.err.println("Attempting to read location from a non-location file.");
 			}
 			else {
-				SimpleDateFormat df = new SimpleDateFormat("h:mm a");
+				
 				Element eElement = doc.getDocumentElement();
 				
 				address =  getTagString("address", eElement);
@@ -59,8 +62,8 @@ public class XMLReader {
 				map_file = getTagString("time_closed", eElement);
 				
 				
-				time_open = df.parse( getTagString("time_open", eElement) );
-				time_closed = df.parse( getTagString("time_closed", eElement) );
+				time_open = getTagTime("time_open", eElement);
+				time_closed = getTagTime("time_closed", eElement);
 				
 				
 				NodeList nList = doc.getElementsByTagName("puzzle");
@@ -221,7 +224,17 @@ public class XMLReader {
 
 		Node nValue = (Node) nlList.item(0);
 
-		return nValue.getNodeValue();
+		return Utils.normalizeText(nValue.getNodeValue());
+	}
+	
+	private static Date getTagTime(String sTag, Element eElement) throws DOMException, ParseException {
+		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+
+		Node nValue = (Node) nlList.item(0);
+		
+		SimpleDateFormat df = new SimpleDateFormat("h:mm a");
+
+		return df.parse( nValue.getNodeValue() );
 	}
 
 	private static int getTagInt(String sTag, Element eElement) {
