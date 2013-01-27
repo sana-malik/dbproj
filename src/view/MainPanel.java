@@ -41,6 +41,8 @@ public class MainPanel extends JPanel{
 		
 		ButtonAction ba = new ButtonAction(testIn, outText);
 		buttonGo.addActionListener(ba);
+		testIn.addActionListener(ba);
+		
 		// end proof of concept
 		
 		panel.setBorder(BorderFactory.createLineBorder (Color.blue, 2));
@@ -65,6 +67,7 @@ class ButtonAction implements ActionListener {
 		
 		out.insert( response + "\n", 0);
 		out.setCaretPosition(0);
+		in.setText("");
 	}
 }
 // end POC
