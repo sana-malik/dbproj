@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import utilities.Utils;
@@ -23,9 +24,14 @@ public class MainPanel extends JPanel{
 		
 		// following code is test/proof of concept!
 		TextField testIn = new TextField(40); // random length, input
-		JTextArea testOut = new JTextArea(20,60); // output
+		JTextArea outText = new JTextArea(20,60); // output
+		
+		outText.setEditable(false);
+		
+		JScrollPane testOut = new JScrollPane(outText);
 		
 		Button buttonGo = new Button("Go!");
+		
 		
 		
 		panel.add(testIn);
@@ -33,7 +39,7 @@ public class MainPanel extends JPanel{
 		panel.add(testOut);
 		
 		
-		ButtonAction ba = new ButtonAction(testIn, testOut);
+		ButtonAction ba = new ButtonAction(testIn, outText);
 		buttonGo.addActionListener(ba);
 		// end proof of concept
 		
@@ -57,7 +63,8 @@ class ButtonAction implements ActionListener {
 		
 		String response = MainWindow.session.checkEntry( entry );
 		
-		out.insert( response + "\n", 0 );
+		out.insert( response + "\n", 0);
+		out.setCaretPosition(0);
 	}
 }
 // end POC
