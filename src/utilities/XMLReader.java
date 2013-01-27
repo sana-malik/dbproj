@@ -52,14 +52,14 @@ public class XMLReader {
 				
 				Element eElement = doc.getDocumentElement();
 				
-				address =  getTagString("address", eElement);
+				address =  getTagText("address", eElement);
 				
-				notes = getTagString("notes", eElement);
-				restroom_description = getTagString("restroom_description", eElement);
-				food_description = getTagString("food_description", eElement);
+				notes = getTagText("notes", eElement);
+				restroom_description = getTagText("restroom_description", eElement);
+				food_description = getTagText("food_description", eElement);
 				
-				image_file = getTagString("time_closed", eElement);
-				map_file = getTagString("time_closed", eElement);
+				image_file = getTagText("time_closed", eElement);
+				map_file = getTagText("time_closed", eElement);
 				
 				
 				time_open = getTagTime("time_open", eElement);
@@ -113,9 +113,9 @@ public class XMLReader {
 			else {
 				Element eElement = doc.getDocumentElement();
 				
-				name = getTagString("name", eElement);
-				start_code = getTagString("start_code", eElement);
-				flavor_text = getTagString("flavor_text", eElement);
+				name = getTagText("name", eElement);
+				start_code = getTagEntry("start_code", eElement);
+				flavor_text = getTagText("flavor_text", eElement);
 				
 				max_fan_worth = getTagInt("max_fan_worth", eElement);
 				par_time = getTagInt("par_time", eElement);
@@ -177,7 +177,7 @@ public class XMLReader {
 		
 			Element eElement = (Element) hint_node;
 			
-			String text = getTagString("text", eElement);
+			String text = getTagText("text", eElement);
 			int minutes_till_available = getTagInt("minutes_till_available", eElement);
 			int minutes_till_min_cost = getTagInt("minutes_till_min_cost", eElement);
 			int max_fan_cost = getTagInt("max_fan_cost", eElement);
@@ -208,9 +208,9 @@ public class XMLReader {
 		
 			Element eElement = (Element) ans_node;
 			
-			String text = getTagString("text", eElement);
-			String type = getTagString("type", eElement);
-			String response = getTagString("response", eElement);
+			String text = getTagEntry("text", eElement);
+			String type = getTagEntry("type", eElement);
+			String response = getTagText("response", eElement);
 			int hint_jump = getTagInt("min_fan_cost", eElement);
 
 			ans = new Answer(text, type, response, hint_jump);
@@ -219,7 +219,15 @@ public class XMLReader {
 		return ans;
 	}
 
-	private static String getTagString(String sTag, Element eElement) {
+	private static String getTagText(String sTag, Element eElement) {
+		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+
+		Node nValue = (Node) nlList.item(0);
+
+		return nValue.getNodeValue();
+	}
+	
+	private static String getTagEntry(String sTag, Element eElement) {
 		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
 
 		Node nValue = (Node) nlList.item(0);

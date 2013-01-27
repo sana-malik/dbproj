@@ -47,10 +47,25 @@ public class Session {
 	
 	public String checkEntry(String entry) {
 		String response = "";
+		int answer_index = -1;
 		
 		// Check active puzzles for an answer
-		for (int index = 0; index < active_puzzle_list.size(); index++ ){
-			response = active_puzzle_list.get(index).checkAnswer( entry );
+		int index = 0;
+		while( index < active_puzzle_list.size() && answer_index == -1) {
+			answer_index = active_puzzle_list.get(index).getAnswerIndex( entry );
+			index++;
+		}
+		
+		index--;  // compensate for the extra ++ after a match above
+		System.out.println(entry +" "+ index +" "+ answer_index);
+		if ( answer_index != -1 ) {
+			Puzzle matching_puzzle = active_puzzle_list.get(index); 
+			response = matching_puzzle.getAnswerResponse(answer_index);
+			
+			if ( matching_puzzle.getAnswerType( answer_index ).equals("final")) {
+				matching_puzzle.closePuzzle();
+				active_puzzle_list.remove( index );
+			}
 		}
 				
 		if ( response.equals("") ) {
@@ -59,7 +74,7 @@ public class Session {
 			local_puzzles.removeAll( active_puzzle_list );  // this is a list of newly activated puzzles
 			active_puzzle_list.addAll( local_puzzles );
 			
-			for( int index = 0; index < local_puzzles.size(); index++ )
+			for( index = 0; index < local_puzzles.size(); index++ )
 				response += local_puzzles.get(index).activatePuzzle();
 		}
 

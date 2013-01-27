@@ -81,30 +81,34 @@ public class Puzzle {
 
 	public String activatePuzzle() {
 		// TODO Auto-generated method stub
+		status = "active";
 		start_time = Calendar.getInstance().getTime();
 		return flavor_text;
 	}
 
-	public String checkAnswer(String entry) {
-		String response = "";
+	public int getAnswerIndex(String entry) {
 		int index = 0;
+		System.out.println(entry);
 		
 		while ( index < answers.size() && !answers.get(index).checkAnswer( entry ) ) {
 			index++;
 		}
 		
-		if ( index != answers.size() ) {
-			Answer matching_answer = answers.get(index);
-			response = matching_answer.getResponse();
-			
-			if ( matching_answer.isFinal() )
-				closePuzzle();
-		}
-		
-		return response;
+		if ( index == answers.size() ) 
+			index = -1;
+		System.out.println(index);
+		return index;
 	}
-
-	private void closePuzzle() {
+	
+	public String getAnswerType(int index){
+		return answers.get(index).getType();
+	}
+	
+	public String getAnswerResponse(int index){
+		return answers.get(index).getResponse();
+	}
+	
+	public void closePuzzle() {
 		// TODO Auto-generated method stub
 		status = "solved";
 		end_time = Calendar.getInstance().getTime();
