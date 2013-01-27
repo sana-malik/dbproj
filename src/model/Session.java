@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,14 +56,16 @@ public class Session {
 		}
 		
 		index--;  // compensate for the extra ++ after a match above
-		System.out.println(entry +" "+ index +" "+ answer_index);
+
 		if ( answer_index != -1 ) {
 			Puzzle matching_puzzle = active_puzzle_list.get(index); 
 			response = matching_puzzle.getAnswerResponse(answer_index);
 			
 			if ( matching_puzzle.getAnswerType( answer_index ).equals("final")) {
-				matching_puzzle.closePuzzle();
+				int earned_fans = matching_puzzle.closePuzzle();
 				active_puzzle_list.remove( index );
+				active_team.addFans(earned_fans);
+				response += "\nYou have earned " + earned_fans + " fans.\n";
 			}
 		}
 				
@@ -82,5 +83,25 @@ public class Session {
 			response = "Unrecognized entry.";
 
 		return response;
+	}
+
+	public void tick() {
+		// TODO Auto-generated method stub
+		elapsed_time++;
+		
+		for ( int index=0; index < active_puzzle_list.size(); index++)
+			active_puzzle_list.get(index).tick();
+	}
+	
+	public int getElapsedTime() {
+		return elapsed_time;
+	}
+
+	public String getHint() {
+		// TODO Auto-generated method stub
+		
+		// TODO This only works if we have one active puzzle 
+		// (with more puzzles, we need to specify which one we want a hint for
+		return active_puzzle_list.get(0).getHint();
 	}
 }

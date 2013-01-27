@@ -23,7 +23,7 @@ public class XMLReader {
 
 	public static Location readLocation(String filename) {
 		Location location = null;
-		
+				
 		ArrayList<Puzzle> puzzle_list = new ArrayList<Puzzle>();
 		String address;
 		

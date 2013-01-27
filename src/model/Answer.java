@@ -23,7 +23,7 @@ public class Answer {
 	}
 	
 	public Answer() {
-		this("", "Unrecognized response.", "default", -1);
+		this("", "Unrecognized input: no matching entry found.", "default", -1);
 	}
 	
 	public boolean checkAnswer(String answer) {

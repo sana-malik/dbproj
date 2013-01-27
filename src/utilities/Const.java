@@ -9,4 +9,12 @@ public class Const {
 	public static final String IMAGE_DIR = "images/";
 	public static final String SOUND_DIR = "sounds/";
 	public static final String VIDEO_DIR = "videos/";
+	
+	public static enum Hint_Status {
+	    LOCKED, AVAILABLE, REVEALED
+	}
+	
+	public static enum Puzzle_Status {
+	    LOCKED, ACTIVE, SOLVED
+	}
 }

@@ -64,5 +64,9 @@ public class Team {
 	public String getId() {
 		return id;
 	}
+
+	public void addFans(int earned_fans) {
+		fans += earned_fans;		
+	}
 	
 }
