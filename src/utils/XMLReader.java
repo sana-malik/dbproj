@@ -7,6 +7,10 @@ import model.Answer;
 import model.Hint;
 import model.Location;
 import model.Puzzle;
+import model.Resource;
+import model.Talent;
+import model.Team;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -17,6 +21,56 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class XMLReader {
+	public static ArrayList<Team> readTeamList(String filename) {
+		ArrayList<Team> teams = new ArrayList<Team>();
+		
+		try {
+			File xmlFile = new File(filename);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(xmlFile);
+			doc.getDocumentElement().normalize();
+			
+			NodeList nList = doc.getElementsByTagName("team");
+				
+			for (int i = 0; i < nList.getLength(); i++) {
+				teams.add(readTeam((Element)nList.item(i)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return teams;
+	}
+
+	public static Team readTeam(Element e) {
+		String id = getTagString("id",e);
+		String name = getTagString("name",e);
+		String password = getTagString("password",e);
+		String bio = getTagString("bio",e);
+		String mentor = getTagString("mentor",e);
+		int fans = Integer.parseInt(getTagString("fans",e));
+		boolean dead = Boolean.parseBoolean(getTagString("dead",e));
+		
+		ArrayList<Resource> resources = new ArrayList<Resource>();
+		NodeList n = e.getElementsByTagName("resource");
+		for (int i = 0; i < n.getLength(); i++) {
+			resources.add(new Resource(n.item(i).getFirstChild().getNodeValue()));
+		}
+		
+		ArrayList<Talent> talents = new ArrayList<Talent>();
+		 n = e.getElementsByTagName("talent");
+		for (int i = 0; i < n.getLength(); i++) {
+			talents.add(new Talent(n.item(i).getFirstChild().getNodeValue()));
+		}
+		
+		String icon = getTagString("icon",e);
+		
+
+		return new Team(id, name, bio, mentor, "Casual", fans, dead, 
+				resources, talents, password, "pictures/team"+id+".jpg",
+				"videos/team"+id+".avi", icon, "team"+id+"_dead");	
+	}
 
 	public static Location readLocation(String filename) {
 		Location location = null;

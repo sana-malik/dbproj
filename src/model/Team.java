@@ -65,4 +65,8 @@ public class Team {
 		return id;
 	}
 	
+	public String getIconAliveFile() {
+		return icon_alive_file;
+	}
+	
 }

@@ -8,72 +8,54 @@ import javax.swing.*;
 
 import model.Session;
 
-public class MainWindow {
+public class MainWindow extends JFrame {
 	final static String WINDOW_TITLE = "Famine Game";
 	
 	
 	protected static Session session;
 	
-	public static void addPanelsToPane(Container container) {
+	private static void addPanelsToPane(Container container) {
 		// Set up content container
-		container.setLayout(new GridBagLayout());
-		
-		// constraints for all panels
-		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.BOTH;
-		
+		container.setLayout(null);
+			
 		// TOP PANEL
-		c.weightx = 1;				// 100% width
-		c.weighty = 0.2;			// 20% height
-		c.gridwidth = 2;			// span two columns
-		c.gridx = 0;				// first row
-		c.gridy = 0;				// first column
-		container.add(TopPanel.create(), c);
+		container.add(new TopPanel());
 		
 		// SIDE PANEL
-		c.weightx = 0.15;			// 15% width
-		c.weighty = 0.8;			// 80% height
-		c.gridwidth = 1;			// span one column
-		c.gridx = 0;				// first column
-		c.gridy = 1;				// second row
-		container.add(SidePanel.create(), c);	
+		container.add(new SidePanel());	
 		
-		// MAIN PANEL
-		c.weightx = 0.85;			// 85% width
-		c.weighty = 0.8;			// 80% height
-		c.gridwidth = 1;			// span one column
-		c.gridx = 1;				// second column
-		c.gridy = 1;				// second row
-		container.add(MainPanel.create(), c);
-		
+		// MAIN PANEL AREA
+		JLayeredPane lp = new JLayeredPane();
+		MainPanel mp = new MainPanel();
+		mp.setOpaque(true);
+		TeamPanel tp = new TeamPanel();
+		tp.setOpaque(true);
+		lp.setBounds(224,100,800,468);
+		lp.add(mp, 0);
+		lp.add(tp, 1);
+		container.add(lp);
 		
 		// BOTTOM PANEL
-		c.weightx = 1;				// 100% width
-		c.weighty = 0.2;			// 20% height
-		c.gridwidth = 2;			// span two columns
-		c.gridx = 0;				// first column
-		c.gridy = 2;				// third row
-		c.anchor = GridBagConstraints.PAGE_END; 	// last component
-		container.add(BottomPanel.create(), c);
+		container.add(new BottomPanel());
 	}
 	
-	private static void createAndShowGUI() {
+	private void createAndShowGUI() {
 		//Create and set up the window.
-		JFrame frame = new JFrame(WINDOW_TITLE);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Set up the content pane.
-		addPanelsToPane(frame.getContentPane());
+		addPanelsToPane(this.getContentPane());
 
 		//Display the window.
-		frame.pack();
-		frame.setSize(1024,768);
-		frame.setResizable(false);
-		frame.setVisible(true);
+		this.pack();
+		this.setSize(1024,768);
+		this.setResizable(false);
+		this.setVisible(true);
 
 	}
 
 	public MainWindow(Session session) {
+		super(WINDOW_TITLE);
 		this.session = session;
 		//Schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI.

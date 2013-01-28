@@ -7,48 +7,50 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import utils.Utilities;
 
 import model.Session;
 
-public class MainPanel extends JPanel{
-	public static JPanel create() {
-		JPanel panel = new JPanel();
+public class MainPanel extends JPanel {
+	public MainPanel() {
 		JLabel text = new JLabel("<html><p>This is the main panel, which will house clues and a main dashboard which will be history-ish.</p></html>");
-		panel.add(text);
+		this.add(text);
 		
 		// following code is test/proof of concept!
-		TextField testIn = new TextField(40); // random length, input
+		JTextField testIn = new JTextField(40); // random length, input
 		JTextArea testOut = new JTextArea(20,60); // output
 		
-		Button buttonGo = new Button("Go!");
+		JButton buttonGo = new JButton("Go!");
 		
 		
-		panel.add(testIn);
-		panel.add(buttonGo);
-		panel.add(testOut);
+		this.add(testIn);
+		this.add(buttonGo);
+		this.add(testOut);
 		
 		
 		ButtonAction ba = new ButtonAction(testIn, testOut);
 		buttonGo.addActionListener(ba);
 		// end proof of concept
 		
-		panel.setBorder(BorderFactory.createLineBorder (Color.blue, 2));
-		return panel;
+		this.setBorder(BorderFactory.createLineBorder (Color.blue, 2));
+		this.setBounds(0, 0, 800, 468);
 	}
 }
 
 // proof of concept contd
 class ButtonAction implements ActionListener {
-	private TextField in;
+	private JTextField in;
 	private JTextArea out;
 
-	public ButtonAction(TextField in, JTextArea out) {
-		this.in = in;
+	public ButtonAction(JTextField testIn, JTextArea out) {
+		this.in = testIn;
 		this.out = out;
 	}
 

@@ -20,10 +20,10 @@ public class Session {
 	private ArrayList<Resource> unlocked_resource_list;
 	private ArrayList<Location> locations;
 	
-	public Session(String teamId) {
-		team_list = new ArrayList<Team>();
-		active_team = new Team(teamId);
-		team_list.add(active_team);
+	public Session(int team_index) {
+		team_list = XMLReader.readTeamList("data/Teams.xml");
+		
+		active_team = team_list.get(team_index);
 		
 		locations = new ArrayList<Location>();
 		locations.add( XMLReader.readLocation("data/location1.xml") );
@@ -31,8 +31,8 @@ public class Session {
 		current_location = locations.get(0);
 	}
 	
-	public String getTeamId() {
-		return active_team.getId();
+	public Team getActiveTeam() {
+		return active_team;
 	}
 
 	public ArrayList<Puzzle> getActivePuzzles() {
