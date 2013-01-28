@@ -33,6 +33,7 @@ public class MainWindow extends JFrame {
 		lp.setBounds(224,100,800,468);
 		lp.add(mp, 0);
 		lp.add(tp, 1);
+		lp.moveToFront(mp);
 		container.add(lp);
 		
 		// BOTTOM PANEL

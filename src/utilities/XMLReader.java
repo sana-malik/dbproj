@@ -1,4 +1,4 @@
-package utils;
+package utilities;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -10,12 +10,13 @@ import model.Puzzle;
 import model.Resource;
 import model.Talent;
 import model.Team;
-
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,13 +45,13 @@ public class XMLReader {
 	}
 
 	public static Team readTeam(Element e) {
-		String id = getTagString("id",e);
-		String name = getTagString("name",e);
-		String password = getTagString("password",e);
-		String bio = getTagString("bio",e);
-		String mentor = getTagString("mentor",e);
-		int fans = Integer.parseInt(getTagString("fans",e));
-		boolean dead = Boolean.parseBoolean(getTagString("dead",e));
+		String id = getTagText("id",e);
+		String name = getTagText("name",e);
+		String password = getTagText("password",e);
+		String bio = getTagText("bio",e);
+		String mentor = getTagText("mentor",e);
+		int fans = getTagInt("fans",e);
+		boolean dead = Boolean.parseBoolean(getTagText("dead",e));
 		
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		NodeList n = e.getElementsByTagName("resource");
@@ -64,7 +65,7 @@ public class XMLReader {
 			talents.add(new Talent(n.item(i).getFirstChild().getNodeValue()));
 		}
 		
-		String icon = getTagString("icon",e);
+		String icon = getTagText("icon",e);
 		
 
 		return new Team(id, name, bio, mentor, "Casual", fans, dead, 
@@ -74,7 +75,7 @@ public class XMLReader {
 
 	public static Location readLocation(String filename) {
 		Location location = null;
-		
+				
 		ArrayList<Puzzle> puzzle_list = new ArrayList<Puzzle>();
 		String address;
 		
@@ -90,7 +91,7 @@ public class XMLReader {
 
 		try {
 
-			File fXmlFile = new File(filename);
+			File fXmlFile = new File(Const.LOCATION_DIR + filename);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -100,21 +101,21 @@ public class XMLReader {
 				System.err.println("Attempting to read location from a non-location file.");
 			}
 			else {
-				SimpleDateFormat df = new SimpleDateFormat("h:mm a");
+				
 				Element eElement = doc.getDocumentElement();
 				
-				address =  getTagString("address", eElement);
+				address =  getTagText("address", eElement);
 				
-				notes = getTagString("notes", eElement);
-				restroom_description = getTagString("restroom_description", eElement);
-				food_description = getTagString("food_description", eElement);
+				notes = getTagText("notes", eElement);
+				restroom_description = getTagText("restroom_description", eElement);
+				food_description = getTagText("food_description", eElement);
 				
-				image_file = getTagString("time_closed", eElement);
-				map_file = getTagString("time_closed", eElement);
+				image_file = getTagText("time_closed", eElement);
+				map_file = getTagText("time_closed", eElement);
 				
 				
-				time_open = df.parse( getTagString("time_open", eElement) );
-				time_closed = df.parse( getTagString("time_closed", eElement) );
+				time_open = getTagTime("time_open", eElement);
+				time_closed = getTagTime("time_closed", eElement);
 				
 				
 				NodeList nList = doc.getElementsByTagName("puzzle");
@@ -152,7 +153,7 @@ public class XMLReader {
 
 		try {
 
-			File fXmlFile = new File(filename);
+			File fXmlFile = new File(Const.PUZZLE_DIR + filename);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -164,9 +165,9 @@ public class XMLReader {
 			else {
 				Element eElement = doc.getDocumentElement();
 				
-				name = getTagString("name", eElement);
-				start_code = getTagString("start_code", eElement);
-				flavor_text = getTagString("flavor_text", eElement);
+				name = getTagText("name", eElement);
+				start_code = getTagEntry("start_code", eElement);
+				flavor_text = getTagText("flavor_text", eElement);
 				
 				max_fan_worth = getTagInt("max_fan_worth", eElement);
 				par_time = getTagInt("par_time", eElement);
@@ -228,7 +229,7 @@ public class XMLReader {
 		
 			Element eElement = (Element) hint_node;
 			
-			String text = getTagString("text", eElement);
+			String text = getTagText("text", eElement);
 			int minutes_till_available = getTagInt("minutes_till_available", eElement);
 			int minutes_till_min_cost = getTagInt("minutes_till_min_cost", eElement);
 			int max_fan_cost = getTagInt("max_fan_cost", eElement);
@@ -259,9 +260,9 @@ public class XMLReader {
 		
 			Element eElement = (Element) ans_node;
 			
-			String text = getTagString("text", eElement);
-			String type = getTagString("type", eElement);
-			String response = getTagString("response", eElement);
+			String text = getTagEntry("text", eElement);
+			String type = getTagEntry("type", eElement);
+			String response = getTagText("response", eElement);
 			int hint_jump = getTagInt("min_fan_cost", eElement);
 
 			ans = new Answer(text, type, response, hint_jump);
@@ -270,12 +271,30 @@ public class XMLReader {
 		return ans;
 	}
 
-	private static String getTagString(String sTag, Element eElement) {
+	private static String getTagText(String sTag, Element eElement) {
 		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
 
 		Node nValue = (Node) nlList.item(0);
 
 		return nValue.getNodeValue();
+	}
+	
+	private static String getTagEntry(String sTag, Element eElement) {
+		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+
+		Node nValue = (Node) nlList.item(0);
+
+		return Utils.normalizeText(nValue.getNodeValue());
+	}
+	
+	private static Date getTagTime(String sTag, Element eElement) throws DOMException, ParseException {
+		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+
+		Node nValue = (Node) nlList.item(0);
+		
+		SimpleDateFormat df = new SimpleDateFormat("h:mm a");
+
+		return df.parse( nValue.getNodeValue() );
 	}
 
 	private static int getTagInt(String sTag, Element eElement) {

@@ -49,12 +49,12 @@
 	
 	<hint>
 		<minutes_till_available>30</minutes_till_available>
-		<minutes_till_min_cost>60</minutes_till_min_cost>
+		<minutes_till_min_cost>30</minutes_till_min_cost>
 		
-		<max_fan_cost>50</max_fan_cost>
-		<min_fan_cost>20</min_fan_cost>
+		<max_fan_cost>100</max_fan_cost>
+		<min_fan_cost>100</min_fan_cost>
 		
-		<text>The Braille solves to \"Blacklight\".  Apply a blacklight to the puzzle and you should see the answer: Sugar Rush.</text>
+		<text>The Braille solves to "Blacklight".  Apply a blacklight to the puzzle and you should see the answer: Sugar Rush.</text>
 	</hint>
 	
 	<answer>
@@ -80,14 +80,14 @@
 	<answer>
 		<type>partial</type>
 		<text>grey</text>
-		<response>You're being too literal.  Also, red comes before blue.</response>
+		<response>Oops, red comes before blue.</response>
 		<hint_jump>4</hint_jump>
 	</answer>
 	
 	<answer>
 		<type>partial</type>
 		<text>gray</text>
-		<response>You're being too literal.  Also, red comes before blue.</response>
+		<response>Oops, red comes before blue.</response>
 		<hint_jump>4</hint_jump>
 	</answer>
 	

@@ -4,7 +4,7 @@ import controller.Controller;
 
 import model.Location;
 import model.Session;
-import utils.XMLReader;
+import utilities.XMLReader;
 import view.MainWindow;
 
 
