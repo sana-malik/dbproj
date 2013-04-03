@@ -1,4 +1,1 @@
-famine-game
-===========
-
-Famine Game app.
+db project!!
