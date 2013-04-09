@@ -1,0 +1,94 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\title{Validating Complex Interval-Based Temporal Queries over Streams}
+\author{Philip Dasler and Sana Malik}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+The ability to query a database for temporal events has become increasingly important as the availability of streaming data has skyrocketed across multiple domains.  While event stream processing has seen much work~\cite{Agrawal:2008, Akdere:2008, Ding:2008, Wu:2006, Brenna:2007, Li:2009, Li:2010, Liu:2009}, it has mainly focused on the relations between instantaneous events.  However, the modelling of events as single points in time is not always appropriate.  Take, for example, a database which tracks a real-time, multi-processor system.  In this system it is important to know when processors are and are not available for use, a task which is traditionally modelled as a series of constrained intervals.  Thus, a database paradigm that can handle intervals as well as instantaneous events is necessary.
+
+Li et al. present three algorithms~\cite{Li:2011} which generalize temporal pattern matching to handle both point- and interval-based events.  As presented, the performance of these algorithms is evaluated under the assumption that all queries have been pre-validated.  Thus, the performance as measured by the authors does not take into account the actual cost of validation.
+
+With this in mind, this project seeks to discover whether or not the resources necessary to validate a query make the proposed algorithms impractical, either in their entirety or under certain conditions.  If it is the case that the validation is cost-prohibitive, then perhaps an intelligent decision could be made on a case-by-case basis whether or not validation should occur at all.  
+
+Given the size of the database, one may be able to predict the complexity of processing a particular query.  Additionally, given the length of that query, it may also be possible to estimate the time it takes to validate it.  A comparison of these two values would hopefully determine whether or not pre-validating a query is worth the cost.  
+
+Temporal Queries over Streams
+The work by Li et al. introduces a new, interval-based query operator largely based on the temporal relation classifications described by Allen~\cite{Allen:1983}.  The following classifications enumerate the various possible relations between intervals, with ts and te representing the start and end times of an event, respectively:
+
+\begin{table}[!ht]\centering
+\begin{tabular}{|c|c|}\hline
+\textbf{Temporal Relation} & \textbf{Temporal Algebra}\\\hline
+$e$ before $e'$ & $(e.te < e'.ts)$\\\hline
+$e$ after $e'$ & $(e.ts > e'.te)$\\\hline
+$e$ during $e'$ & $(e.ts > e'.ts) ^ (e.te < e'.te)$ \\\hline
+$e$ contain $e'$ & $(e.ts < e'.ts) ^ (e.te > e'.te)$ \\\hline
+$e$ meets $e'$ & $(e.te = e'.ts)$ \\\hline
+$e$ met by $e'$ & $(e.ts = e'.te)$ \\\hline
+$e$ overlap $e'$ & $(e.ts < e'.ts) ^ (e.te > e'.ts) ^ (e.te < e'.te)$ \\\hline
+$e$ overlapped by $e'$ & $(e.ts > e'.ts) ^ (e.ts < e'.te) ^ (e.te > e'.te)$ \\\hline
+$e$ start $e'$ & $(e.ts = e'.ts) ^ (e.te < e'.te)$ \\\hline
+$e$ started by $e'$ & $(e.ts = e'.ts) ^ (e.te > e'.te)$ \\\hline
+$e$ finish $e'$ & $(e.ts > e'.ts) ^ (e.te = e'.te)$ \\\hline
+$e$ finished by $e'$ & $(e.ts < e'.ts) ^ (e.te = e'.te)$ \\\hline
+$e$ equal $e'$ & $(e.ts = e'.ts) ^ (e.te = e'.te)$ \\\hline
+\end{tabular}
+\caption{Allen's 13 temporal relations. $e$ is an event whose start time is $e.ts$ and end time is $e.te$.}\label{tab:relations}
+\end{table}
+
+Given this set of relations, Li et al define ISEQ, a query processor designed to look for sets of relations between intervals. This processor, however, makes the assumption that any query provided to it will be valid (that is to say, logically consistent).  For example, a query searching for two intervals which occur before each other and after each other should be rejected by a validator before being sent to the query processor.
+
+While validation of the query is not, strictly speaking, a complex endeavor in terms of algorithm design, it can still be computationally costly depending on the query itself.  This parallels a similar concern in query optimization.  If a query optimization would take longer than actually running the query on the database, then doing so  provides no real benefit.  This is shown by Ilyas et al~\cite{Ilyas:2003}, who explore some methods for meta-optimization (i.e. selecting an appropriate level of optimization) in order to balance the cost of optimization with the query cost.
+
+Of course, a validation process is not really capable of adjusting its resolution in the same way a meta-optimizer might.  Partially validating a query would likely provide few gains as the true goal is to throw out bad queries without having to access the database at all.  This can only be done if a query is entirely validated and deemed either consistent, at which point it is processed by ISEQ, or deemed inconsistent and rejected.
+
+\section{Validation of Temporal Logic}
+The actual cost of validation depends on two factors: the query length and the validation method. Allen's Temporal Relationships~\cite{Franke:2011} is an implementation of Allen's 13 relations shown in~\ref{tab:relations}. The library includes path consistency validation as proposed by Allen.
+Due to the limited number of existing validators for Allen's Temporal Logic (ATL), it may be more beneficial to convert queries into a more widely used formalism. Though converting the queries is not free, the savings of using a highly optimized, existing validator may outweigh these costs. Rosu and Bensalem~\cite{Rosu:2006} describe a linear translation from ATL to Linear Temporal Logic (LTL), allowing LTL validation techniques to be used on relations expressed in ATL. 
+
+For example, by converting the queries to LTL, it may be possible for AI planning techniques such as TLPlan~\cite{Bacchus:1998} to be used.  This method would essentially treat the temporal relationships as a partially ordered set of constraints.  Then, rather than using an existing validator, ATL can be simplified to a directed graph representation, where an edge between two time points (a, b) represents a dependency, namely that a must precede b.  Inconsistencies can then be detected by looking for cycles in the graph with a topological sort~\cite{Pearce:2004} and, if found, the query is considered invalid.  Unfortunately, this method will only work under a restricted set of interval relationships.  It does not, for example, cover the relationships in which two event times must be equal.
+
+ATL can similarly be converted to a boolean satisfiability problem (SAT)~\cite{Cook:1971}. Armando et al.~\cite{Armando:1999} describe SAT-based validation techniques specifically for temporal logic expressed in disjunctive normal form (DNF).  As any logical formula can be converted to DNF, we can simply convert temporal queries and then run them through a SAT solver.  If the DNF formula is satisfiable, then the original query is valid.   This method has the advantage of allowing us to leverage the extensive work on the SAT problem without needlessly constraining our queries (as the solutions above do). 
+
+
+\section{Experimental Setup}
+This project combines several pieces of off-the-shelf software in order to build a complete query system.  Below is a list of this software and a brief justification of their selection:
+
+\textbf{Database:} For the database, we are using MongoDB~\cite{10gen:2013}. MongoDB is a free, open source, document-based NoSQL database which requires low overhead to set up. 
+
+\textbf{Project Management:} For project management and software version control, we will be using a private repository on GitHub~\cite{GitHub:2013}, a web-based hosting service which uses the Git versioning system. Github also offers a bug tracking system and a corresponding wiki which will allow for smoother collaboration. 
+
+\textbf{Language:} The temporal logic and validator will be implemented in Java, which was chosen for its familiarity to the developers and because many packages exist for boolean logic validation. 
+
+\textbf{SAT Solver:}  Boolean satisfiability will be determined by Sat4j~\cite{Een:2003}, a java library for solving boolean satisfaction and optimization problems.  Although using Java for heavy computation will incur an efficiency penalty, this library is flexible, full featured, and robust and will allow us to concentrate on our experimentation rather than on implementing the necessary tools.  
+
+\section{Dataset}
+The dataset that will be used in the experiments consists of a total of 638,182 Twitter data items (tweets) collected between May 2, 2012 and June 10, 2012. Each entry contains the text of the tweet (``text''), the date-timestamp that the tweet was sent (``start''), and an ``end'' date-timestamp which was fabricated by adding 1 second to the start time for every character in the tweet text.
+
+One of the factors in the experiment we plan to run is database size, with three treatments: small, medium, and large. The entire dataset of 638,182 tweets was randomly sampled with a uniform distribution for 1,000 and 70,814 tweets to create the small and medium databases, respectively. The large database consists of the entire Twitter dataset. 
+
+\section{Experimental Design}
+An experiment will be conducted to study the performance effects of including a validation step in the query plan. The experiment will employ a 3x3x2 within-group factorial design. The three factors (and their treatments) will be query length (short, medium, long), database size (small, medium, large), and query satisfiability (satisfiable, unsatisfiable). 
+
+\begin{table}\centering
+\begin{tabular}{|c|c|}\hline
+\textbf{Parameter} & \textbf{Values}\\\hline
+Query Length & {short, medium, long}\\\hline
+Query Satisfiability & {satisfiable, unsatisfiable}\\\hline
+Database Size & {small, medium, large}\\\hline
+\end{tabular}
+\caption{A table of each factor and their treatments.}\label{tab:factors}
+\end{table}
+
+Although the original paper on which this work is based~\cite{Li:2011} presents three algorithms for temporal queries and evaluating all three algorithms may be academically interesting, this project will focus on the fastest algorithm due to time constraints, as it is most likely to be used in a real-world situation. Thus, the two groups will be the algorithm as studied in the original paper without any validation (baseline) and with a validation technique. 
+
+Each treatment will be repeated on the two algorithms multiple times, though at this time, we have not decided how many times we will run each treatment, or how (or if) we will randomly generate queries of varying lengths.
+
+\bibliographystyle{plain}
+\bibliography{intervals}
+\end{document}
