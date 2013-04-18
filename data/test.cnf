@@ -1,0 +1,13 @@
+c  test.cnf
+c 
+c  This is the cnf file for the following formula:
+c    
+c    ( x(1) OR ( NOT x(3) ) )
+c        AND
+c    ( x(2) OR x(3) OR ( NOT x(1) ) )
+c
+c
+c
+p cnf 3 2
+1 -3 0
+2 3 -1 0
