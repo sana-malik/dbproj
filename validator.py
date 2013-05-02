@@ -71,15 +71,16 @@ def randomRelationshipString( e, e_prime ):
 
 ## Main
         
-query_file = open('test_queries.txt', 'w')
+query_file = open('queries.txt', 'w')
 
-num_queries = 1000
-num_intervals = 100
-num_clauses = num_intervals/2
+num_queries = 1000  ## How many queries should be generated.
+num_intervals = 100 ## How many intervals will be in the query 
+num_clauses = num_intervals/2  ## Number of clauses in the query (note, due to randomness (and laziness) not all intervals will necessarily be in the query)
 
 generate_queries(num_queries, num_intervals, num_clauses, query_file)
+query_file.close()
 
-query_file = open('test_queries.txt', 'r')
+query_file = open('queries.txt', 'r')
 
 
 ##query_file = open('queries.txt', 'r')
@@ -98,3 +99,4 @@ print "\nTotal queries: " + str(cnt)
 print "Percentage Unsatisfiable: " + str( 100*unsat/cnt )
 print "Percentage Satisfiable: " + str( 100*(cnt-unsat)/cnt )
     
+query_file.close()
