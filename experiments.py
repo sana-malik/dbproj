@@ -7,7 +7,7 @@ def runQuery(query, collectionName):
 	collection = db[collectionName]
 	collection.find(query)
 
-def validate(formula):
+#def validate(formula):
 	# meow
 
 def runExperiments():
