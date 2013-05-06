@@ -1,26 +1,28 @@
 from z3 import *
 import random
-
+from sets import Set
 
 def solve( query ):
-    split_query = query.split(':')
     x = []
-    var_num = int( split_query[0] )
+    var_num = num_vars(query)
+
     for var in range( var_num ):
         x.append( Real( 'x[' + str(var) + ']' ) )
 
     s = Solver()
-    s.add( eval(split_query[1]) )
+    s.add( eval(query) )
     
     ## Ensure that an interval's start time is before its endtime when validating queries
     for interval in range( var_num/2 ):
         s.add(eval("x[" + str(2*interval) + "] < x[" + str(2*interval+1) + "]"))
-             
+
+    #print str(var_num/2) + " " + str(s.check())
     return s.check()
 
-def generate_queries(num_queries, num_intervals, num_clauses, output_file):
-    for i in range(num_queries):
-        query = str(2*num_intervals) + ": "
+def generate_queries(num_queries, num_intervals, num_clauses, sat, output_file):
+    i = 0
+    while i < num_queries:
+        query = ""
 
         ## Add random interval relationships to the query
         for rel in range( num_clauses ):
@@ -33,7 +35,26 @@ def generate_queries(num_queries, num_intervals, num_clauses, output_file):
                 query = query + ", "
         
         query = query + "\n"
-        output_file.write( query )
+
+        uniques = identifyUniqueElements( query )
+  
+        next_assignment = 0
+        for index in range(len(uniques)):
+            var_index = uniques[index]
+            if index>0:
+                if var_index%2!=0 and var_index-1!=uniques[index-1]:
+                    next_assignment = next_assignment + 1
+            if var_index > next_assignment:
+                query = query.replace("["+str(var_index)+"]", "["+str(next_assignment)+"]")
+            if index<len(uniques)-1:
+                if var_index%2==0 and var_index+1!=uniques[index+1]:
+                    next_assignment = next_assignment + 1
+            next_assignment = next_assignment + 1
+
+        if (str(solve(query)) == 'unsat') == (not sat):
+            i = i + 1
+            print "Generated query " + str(i)
+            output_file.write( query )
 
 def randomRelationshipString( e, e_prime ):
     relationship = ""
@@ -69,34 +90,24 @@ def randomRelationshipString( e, e_prime ):
         
     return relationship
 
-## Main
-        
-query_file = open('queries.txt', 'w')
+def identifyUniqueElements( query ):
+ ## Identify unique elements
+    els = query.replace("<", " ").replace(">", " ").replace("==", " ").replace(",", " ").replace("x["," ").replace("]"," ").split()
+    unique_els = []
+    for el in els:
+        num = int(el)
+        if num not in unique_els:
+            unique_els.append(num)
 
-num_queries = 1000  ## How many queries should be generated.
-num_intervals = 100 ## How many intervals will be in the query 
-num_clauses = num_intervals/2  ## Number of clauses in the query (note, due to randomness (and laziness) not all intervals will necessarily be in the query)
+    unique_els.sort()
+    return unique_els
 
-generate_queries(num_queries, num_intervals, num_clauses, query_file)
-query_file.close()
-
-query_file = open('queries.txt', 'r')
-
-
-##query_file = open('queries.txt', 'r')
-
-unsat = 0.0
-cnt = 0
-for query in query_file:
-    cnt = cnt + 1
-   # print "Processing query " + str(cnt)
-    sat = str(solve( query ))
-   # print sat
-    if sat == 'unsat':
-        unsat = unsat + 1.0
+def num_vars( query ):
+    uniques = identifyUniqueElements(query)
+    max_index = uniques[ len(uniques)-1 ]  # Find biggest variable index
+    max_index = max_index + (1-max_index%2) # If it's even, we need to add that intervals endpoint
+    return max_index + 1 # Account for zero indexing (since this is a count)
 
 print("\nTotal queries: " + str(cnt))
 print("Percentage Unsatisfiable: " + str( 100*unsat/cnt ))
 print("Percentage Satisfiable: " + str( 100*(cnt-unsat)/cnt ))
-    
-query_file.close()
