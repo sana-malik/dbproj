@@ -1,6 +1,6 @@
 from z3 import *
 import random
-from sets import Set
+#from sets import Set
 
 def solve( query ):
     x = []
@@ -13,7 +13,7 @@ def solve( query ):
     s.add( eval(query) )
     
     ## Ensure that an interval's start time is before its endtime when validating queries
-    for interval in range( var_num/2 ):
+    for interval in range( int(var_num/2) ):
         s.add(eval("x[" + str(2*interval) + "] < x[" + str(2*interval+1) + "]"))
 
     #print str(var_num/2) + " " + str(s.check())
@@ -25,7 +25,7 @@ def generate_queries(num_queries, num_intervals, num_clauses, sat, output_file):
         query = ""
 
         ## Add random interval relationships to the query
-        for rel in range( num_clauses ):
+        for rel in range( int(num_clauses) ):
             interval1 = interval2 = random.randint(0, num_intervals-1)
             while interval2 == interval1:
                 interval2 = random.randint(0, num_intervals-1)
@@ -107,7 +107,3 @@ def num_vars( query ):
     max_index = uniques[ len(uniques)-1 ]  # Find biggest variable index
     max_index = max_index + (1-max_index%2) # If it's even, we need to add that intervals endpoint
     return max_index + 1 # Account for zero indexing (since this is a count)
-
-print("\nTotal queries: " + str(cnt))
-print("Percentage Unsatisfiable: " + str( 100*unsat/cnt ))
-print("Percentage Satisfiable: " + str( 100*(cnt-unsat)/cnt ))

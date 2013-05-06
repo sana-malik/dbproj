@@ -1,12 +1,13 @@
 from validator import *
 
+init('/fs/junkfood/maliks/Courses/724/dbproj/libz3.so')
 SAT = True
 UNSAT = False
 
 
 ## Main
-filename = 'sat-medium-queries.txt'
-num_queries = 1000  ## How many queries should be generated.
+filename = 'queries.txt'
+num_queries = 10  ## How many queries should be generated.
 num_intervals = 100 ## How many intervals will be in the query 
 sat = SAT
 
