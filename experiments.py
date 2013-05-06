@@ -1,28 +1,25 @@
-from pymongo import MongoClient
+import postgresql
 import timeit
-
-def runQuery(query, collectionName):
-	client = MongoClient()
-	db = client['dbproj']
-	collection = db[collectionName]
-	collection.find(query)
-
-#def validate(formula):
-	# meow
+from validator import solve
 
 def runExperiments():
-	times = []
-	f = open('queries.txt','r')
-	lines = f.readlines()
-	for line in lines:
-		(formula, query) = line.split("|")
-		s = timeit.timeit('runQuery('+query+',small)')
-		m = timeit.timeit('runQuery('+query+',medium)')
-		l = timeit.timeit('runQuery('+query+',large)')
-		sV = timeit.timeit('validate('+formula+'); runQuery('+query+',small)')
-		mV = timeit.timeit('validate('+formula+'); runQuery('+query+',medium)')
-		lV = timeit.timeit('validate('+formula+'); runQuery('+query+',large)')
-		times.append((s,m,l))
+	for filename in ['sat-short', 'unsat-short', 'sat-medium','unsat-medium','sat-long','unsat-long']:
+		times = []
+		f = open('queries.txt','r')
+		lines = f.readlines()
+		f.close()
+		f = open(filename+'times.txt','w')
+		
+		for formula in lines:
+			query = convertToQuery(formula)
+			#s = timeit.timeit('runQuery("'+query+'","small")')
+			#m = timeit.timeit('runQuery("'+query+'","medium")')
+			#l = timeit.timeit('runQuery("'+query+'","large")')
+			#sV = timeit.timeit('solve("'+formula+'"); runQuery("'+query+'","small")')
+			#mV = timeit.timeit('solve("'+formula+'"); runQuery("'+query+'","medium")')
+			#lV = timeit.timeit('solve("'+formula+'"); runQuery("'+query+'","large")')
+			#times.append((s,m,l))
+			print(timeit.timeit('solve("'+formula+'")'));
 
 if __name__ == "__main__":
-	runExperimets()
+	runExperiments()

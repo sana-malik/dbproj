@@ -1,4 +1,4 @@
-from z3.bin.z3 import *
+from z3 import *
 import random
 
 
@@ -95,8 +95,8 @@ for query in query_file:
     if sat == 'unsat':
         unsat = unsat + 1.0
 
-print "\nTotal queries: " + str(cnt)
-print "Percentage Unsatisfiable: " + str( 100*unsat/cnt )
-print "Percentage Satisfiable: " + str( 100*(cnt-unsat)/cnt )
+print("\nTotal queries: " + str(cnt))
+print("Percentage Unsatisfiable: " + str( 100*unsat/cnt ))
+print("Percentage Satisfiable: " + str( 100*(cnt-unsat)/cnt ))
     
 query_file.close()
