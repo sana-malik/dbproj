@@ -53,7 +53,7 @@ def generate_queries(num_queries, num_intervals, num_clauses, sat, output_file):
 
         if (str(solve(query)) == 'unsat') == (not sat):
             i = i + 1
-            print "Generated query " + str(i)
+            print("Generated query " + str(i))
             output_file.write( query )
 
 def randomRelationshipString( e, e_prime ):
