@@ -5,7 +5,6 @@ UNSAT = False
 
 
 ## Main
-
 filename = 'sat-medium-queries.txt'
 num_queries = 1000  ## How many queries should be generated.
 num_intervals = 100 ## How many intervals will be in the query 
@@ -32,15 +31,15 @@ var_sum = 0.0
 for query in query_file:
     var_sum = var_sum + num_vars(query)
     cnt = cnt + 1
-    print "Processing query " + str(cnt)
+    print("Processing query " + str(cnt))
     sat = str(solve( query ))
 
     if sat == 'unsat':
         unsat = unsat + 1.0
 
-print "\nTotal queries: " + str(cnt)
-print "Average Number of Variables: " + str(var_sum/cnt)
-print "Percentage Unsatisfiable: " + str( 100*unsat/cnt )
-print "Percentage Satisfiable: " + str( 100*(cnt-unsat)/cnt )
+print("\nTotal queries: " + str(cnt))
+print("Average Number of Variables: " + str(var_sum/cnt))
+print("Percentage Unsatisfiable: " + str( 100*unsat/cnt ))
+print("Percentage Satisfiable: " + str( 100*(cnt-unsat)/cnt ))
     
 query_file.close()
