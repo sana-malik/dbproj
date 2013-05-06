@@ -16,11 +16,12 @@ def solve( query ):
     for interval in range( var_num/2 ):
         s.add(eval("x[" + str(2*interval) + "] < x[" + str(2*interval+1) + "]"))
 
-    print str(var_num/2) + " " + str(s.check())
+    #print str(var_num/2) + " " + str(s.check())
     return s.check()
 
-def generate_queries(num_queries, num_intervals, num_clauses, output_file):
-    for i in range(num_queries):
+def generate_queries(num_queries, num_intervals, num_clauses, sat, output_file):
+    i = 0
+    while i < num_queries:
         query = ""
 
         ## Add random interval relationships to the query
@@ -49,8 +50,11 @@ def generate_queries(num_queries, num_intervals, num_clauses, output_file):
                 if var_index%2==0 and var_index+1!=uniques[index+1]:
                     next_assignment = next_assignment + 1
             next_assignment = next_assignment + 1
-            
-        output_file.write( query )
+
+        if (str(solve(query)) == 'unsat') == (not sat):
+            i = i + 1
+            print "Generated query " + str(i)
+            output_file.write( query )
 
 def randomRelationshipString( e, e_prime ):
     relationship = ""
