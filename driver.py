@@ -1,6 +1,5 @@
 from validator import *
 
-init('/fs/junkfood/maliks/Courses/724/dbproj/libz3.so')
 SAT = True
 UNSAT = False
 
