@@ -108,4 +108,4 @@ def num_vars( query ):
     max_index = max_index + (1-max_index%2) # If it's even, we need to add that intervals endpoint
     return max_index + 1 # Account for zero indexing (since this is a count)
 
-init('/fs/junkfood/maliks/Courses/724/dbproj/libz3.so')
+#init('/fs/junkfood/maliks/Courses/724/dbproj/libz3.so')
