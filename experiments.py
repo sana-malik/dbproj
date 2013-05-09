@@ -19,25 +19,21 @@ def validate(formula):
 	return solve(formula)
 
 def runExperiments():
-	for filename in ['sat-short', 'unsat-short', 'sat-medium','unsat-medium','sat-long','unsat-long']:
-#	for filename in ['test']:
-		times = []
-		f = open(filename+'-queries.txt','r')
-		lines = [line.strip() for line in f.readlines()]
-		f.close()
-		f = open(filename+'-times.txt','w')
-		
-		for formula in lines:
-			querySm = convertToQuery(formula,"small")
-			queryMd = convertToQuery(formula,"medium")
-			queryLg = convertToQuery(formula,"large")
-			s = timeit.Timer(stmt='runQuery("'+querySm+'",psql)', setup="from __main__ import runQuery; import postgresql; psql = postgresql.open('pq://localhost/dbproj')").timeit(100)
-			m = timeit.Timer(stmt='runQuery("'+queryMd+'",psql)', setup="from __main__ import runQuery; import postgresql; psql = postgresql.open('pq://localhost/dbproj')").timeit(100)
-			l = timeit.Timer(stmt='runQuery("'+queryLg+'",psql)', setup="from __main__ import runQuery; import postgresql; psql = postgresql.open('pq://localhost/dbproj')").timeit(100)
-			sV = timeit.Timer(stmt='validate("'+formula+'"); runQuery("'+querySm+'",psql)', setup="from __main__ import runQuery, validate; import postgresql; psql = postgresql.open('pq://localhost/dbproj')").timeit(100)
-			mV = timeit.Timer(stmt='validate("'+formula+'"); runQuery("'+queryMd+'",psql)', setup="from __main__ import runQuery, validate; import postgresql; psql = postgresql.open('pq://localhost/dbproj')").timeit(100)
-			lV = timeit.Timer(stmt='validate("'+formula+'"); runQuery("'+queryLg+'",psql)', setup="from __main__ import runQuery, validate; import postgresql; psql = postgresql.open('pq://localhost/dbproj')").timeit(100)
-			f.write("%f,%f,%f,%f,%f,%f\n" % (s, m, l, sV, mV, lV))
-			
+	filename = 'all-formulas';
+	f = open(filename+'.txt','r')
+	lines = [line.strip().split("|") for line in f.readlines()]
+	f.close()
+	f = open(filename+'-times.txt','w')
+	f.write('query_class,query_length,db_size,v_time,r_time\n')
+	
+	for (query_class,query_length,formula) in lines:
+		print query_class, query_length, formula
+		v_time = timeit.Timer(stmt='validate("'+formula+'")', setup="from __main__ import validate").timeit(1)
+		for db_size in ['small','medium','large']:
+			query = convertToQuery(formula,db_size)
+			#r_time = timeit.Timer(stmt='runQuery("'+querySm+'",psql)', setup="from __main__ import runQuery; import postgresql; psql = postgresql.open('pq://localhost/dbproj')").timeit(100)
+			r_time = 0.0
+			f.write("%s,%s,%s,%f,%f\n" % (query_class,query_length,db_size,v_time,r_time))
+	
 if __name__ == "__main__":
 	runExperiments()
