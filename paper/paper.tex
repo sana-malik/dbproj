@@ -1,17 +1,25 @@
-\documentclass[10pt, journal]{IEEEtran}
+\documentclass{acm_proc_article-sp}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \title{Validating Complex Interval-Based Temporal Queries over Streams}
-\author{\IEEEauthorblockN{Philip Dasler and Sana Malik}
-\IEEEauthorblockA{Department of Computer Science\\
-University of Maryand\\
-College Park, MD 20740\\
-\{daslerpc, maliks\}@cs.umd.edu}}
+\numberofauthors{1} 
+\author{
+\alignauthor
+Philip Dasler and Sana Malik\\
+       \affaddr{Department of Computer Science}\\
+       \affaddr{University of Maryland}\\
+       \affaddr{College Park, MD 20740}\\
+       \email{\{daslerpc, maliks\}@cs.umd.edu}
+ }
 \begin{document}
 \maketitle
+\begin{abstract}
+Abstract here.
+\end{abstract}
+
 \section{Introduction}
 The ability to query a database for temporal events has become increasingly important as the availability of streaming data has skyrocketed across multiple domains.  While event stream processing has seen much work~\cite{Agrawal:2008, Akdere:2008, Ding:2008, Wu:2006, Brenna:2007, Li:2009, Li:2010, Liu:2009}, it has mainly focused on the relations between instantaneous events.  However, the modelling of events as single points in time is not always appropriate.  Take, for example, a database which tracks a real-time, multi-processor system.  In this system it is important to know when processors are and are not available for use, a task which is traditionally modelled as a series of constrained intervals.  Thus, a database paradigm that can handle intervals as well as instantaneous events is necessary.
 
@@ -92,6 +100,6 @@ Although the original paper on which this work is based~\cite{Li:2011} presents 
 
 Each treatment will be repeated on the two algorithms multiple times, though at this time, we have not decided how many times we will run each treatment, or how (or if) we will randomly generate queries of varying lengths.
 
-\bibliographystyle{plain}
+\bibliographystyle{abbrv}
 \bibliography{intervals}
 \end{document}
