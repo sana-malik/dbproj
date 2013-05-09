@@ -21,14 +21,14 @@ def validate(formula):
 def runExperiments():
 	filename = 'all-formulas';
 	f = open(filename+'.txt','r')
-	lines = [line.strip().split("|") for line in f.readlines()]
+	lines = [line.strip() for line in f.readlines()]
 	f.close()
 	f = open(filename+'-times.txt','w')
 	f.write('query_class,query_length,db_size,v_time,r_time\n')
 	
-	for (query_class,query_length,formula) in lines:
-		print query_class, query_length, formula
-		v_time = timeit.Timer(stmt='validate("'+formula+'")', setup="from __main__ import validate").timeit(1)
+	for line in lines:
+		(query_class,query_length,formula) = line.split("|")
+		v_time = timeit.Timer(stmt='solve("'+formula+'")', setup="from validator import solve").timeit(100)/100
 		for db_size in ['small','medium','large']:
 			query = convertToQuery(formula,db_size)
 			#r_time = timeit.Timer(stmt='runQuery("'+querySm+'",psql)', setup="from __main__ import runQuery; import postgresql; psql = postgresql.open('pq://localhost/dbproj')").timeit(100)
