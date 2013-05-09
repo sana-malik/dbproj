@@ -51,7 +51,7 @@ def run_swi(kb_size, query_size, query_class, args, i, *aargs, **kwargs):
 			'-s', make_tmpfile_name(kb_size, query_size, query_class),
 			'-g', 'time(findall([{0}],{1},ZZZ)).'.format(args, make_pred_sig(args, i)),
 			'-t', 'halt.',
-			'-G6g',
+			'-G32g',
 			_err=f
 	)
 	output = f.getvalue()
